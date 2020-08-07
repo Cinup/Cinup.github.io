@@ -132,7 +132,7 @@
 <meta property="og:image" content="http://yoursite.com/images/process.png">
 <meta property="og:image" content="http://yoursite.com/images/list.png">
 <meta property="og:image" content="http://yoursite.com/images/list_1.png">
-<meta property="og:updated_time" content="2020-08-05T13:33:35.591Z">
+<meta property="og:updated_time" content="2020-08-07T05:25:15.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解Linux内核">
 <meta name="twitter:description" content="简介这篇是&amp;lt;深入理解Linux内核&amp;gt;第三版的读书笔记，会在阅读完一部分后进行更新。 注:本文代码是参阅Linux2.6.11的，因此会与现在3.0以上的版本有些许出入。  2019.2.25更新第一章内存寻址，对应&amp;lt;深入理解Linux&amp;gt;第二章内容。  2019.2.28完成分段。  2019.3.2完成硬件中的分页。  2019.3.16完成Linux中的分页。   201">
@@ -377,7 +377,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-08-05 21:33:35" itemprop="dateModified" datetime="2020-08-05T21:33:35+08:00">2020-08-05</time>
+                <time title="修改时间：2020-08-07 13:25:15" itemprop="dateModified" datetime="2020-08-07T13:25:15+08:00">2020-08-07</time>
               
             
           </span>
@@ -538,7 +538,7 @@
 </tr>
 </tbody>
 </table>
-<h5 id="快速访问段描述符"><a href="#快速访问段描述符" class="headerlink" title="快速访问段描述符"></a>快速访问段描述符</h5><p>根据图2所示，每次逻辑地址转换都需要根据段选择符访问内存中的段描述符，为了加快段描述符的访问，80x86处理器提供了一种附加的非编程寄存器来供6个段寄存器使用。每个非编程寄存器含有一个的段描述符(8字节/8B)。当一个段选择符被装入段寄存器时，它所指定的段描述符就装入对应的非编程寄存器。至此，针对这个段的逻辑地址转换就不需要再访问GDT或者LDT，而是直接访问存放段描述符的非编程寄存器即可。</p>
+<h5 id="快速访问段描述符"><a href="#快速访问段描述符" class="headerlink" title="快速访问段描述符"></a>快速访问段描述符</h5><p>根据图1-2所示，每次逻辑地址转换都需要根据段选择符访问内存中的段描述符，为了加快段描述符的访问，80x86处理器提供了一种附加的非编程寄存器来供6个段寄存器使用。每个非编程寄存器含有一个的段描述符(8字节/8B)。当一个段选择符被装入段寄存器时，它所指定的段描述符就装入对应的非编程寄存器。至此，针对这个段的逻辑地址转换就不需要再访问GDT或者LDT，而是直接访问存放段描述符的非编程寄存器即可。</p>
 <p>由于一个段描述符是8B长，所以它在内存中的地址是</p>
 <center>描述符表的首地址+段选择符索引号(前13位)*8</center>
 
@@ -552,7 +552,7 @@
 
 <ul>
 <li>获得逻辑地址的段选择符，检查其TL字段，以决定从哪个描述符表中获取段描述符，</li>
-<li>从段选择符的索引号和描述符表首地址计算出描述符的地址(见公式1)，</li>
+<li>从段选择符的索引号和描述符表首地址计算出描述符的地址(见公式1-1)，</li>
 <li>从段描述符中获取Base字段和逻辑地址的偏移量相加就得到了线性地址，</li>
 <li>将段描述符存入非编程寄存器中，下次该段的地址转换可以直接访问非编程寄存器获得Base字段。</li>
 </ul>
@@ -743,7 +743,7 @@
 <p><strong>Filed</strong>字段只有前10位有效。</p>
 <p><strong>Page Size</strong>设置成为1。</p>
 <h5 id="硬件保护方案"><a href="#硬件保护方案" class="headerlink" title="硬件保护方案"></a>硬件保护方案</h5><p>分页单元和分段单元的保护方案不同，页和页表相关的特权级只有两个，<strong>User/Supervisos(U/S)</strong>标志控制。此外，页的存取权限只有读和写两种，而段有读，写和执行三种。</p>
-<h5 id="物理地址拓展分页机制"><a href="#物理地址拓展分页机制" class="headerlink" title="物理地址拓展分页机制"></a>物理地址拓展分页机制</h5><p>处理器所支持的RAM容量收到地址总线上的地址管脚数目限制，前面说过，20位的地址总线就只能寻址<strong>1MB</strong>的RAM，32位理论上可以寻址<strong>4GB</strong>的RAM。显然，通过提升地址总线可以提升寻址RAM容量。</p>
+<h5 id="物理地址拓展分页机制"><a href="#物理地址拓展分页机制" class="headerlink" title="物理地址拓展分页机制"></a>物理地址拓展分页机制</h5><p>处理器所支持的RAM容量受地址总线上的地址管脚数目限制，前面说过，20位的地址总线就只能寻址<strong>1MB</strong>的RAM，32位理论上可以寻址<strong>4GB</strong>的RAM。显然，通过提升地址总线可以提升寻址RAM容量。</p>
 <p>因此，早期Inter通过把管脚从32增加到36，使得寻址能力达到了<strong>64GB</strong>，但是线性地址还是32位的，因此需要引入一种新的分页机制，把32位的线性地址转换为36位物理地址，这就是<strong>物理地址拓展(PAE)</strong>机制。</p>
 <p>通过<strong>cr4</strong>控制寄存器的PAE标志激活PAE，页目录项中的<strong>Page Size</strong>设置为1，分页机制发生改变</p>
 <ul>
@@ -782,7 +782,7 @@
 <p>因为这样页目录项和页表项太庞大，因此64位系统普遍采用三级甚至四级分页。</p>
 <p>x86_64平台使用48位来寻址，采用四级分页，线性地址分级为9+9+9+9+12。</p>
 <h5 id="硬件高速缓存"><a href="#硬件高速缓存" class="headerlink" title="硬件高速缓存"></a>硬件高速缓存</h5><p>我们知道CPU的时钟频率有几个GHz，而动态RAM(DRAM)芯片的存取时间是时钟周期的数百倍，这意味着从RAM中读写数据时，CPU需要等待很长的时间。</p>
-<p>未来弥补CPU和RAM之间的速度差距，引入了硬件高速缓存。</p>
+<p>为了弥补CPU和RAM之间的速度差距，引入了硬件高速缓存。</p>
 <p>硬件高速缓存给予著名的<strong>局部性原理</strong>，由于程序的循环结构及数组可以组织成线性数组，最近最常用的相邻地址在不久的将来又被用到的可能性极大。因此，引入小而快的内存来存放最近最常使用的代码和数据就可以不用多次访问RAM。</p>
 <center><img src="/images/cache.png" alt="cache"></center>
 
@@ -939,7 +939,7 @@
 
 <center>图2-2</center>
 
-<p>初次之外，还定义了另一种<strong>hlist_head</strong>数据结构，主要用于散列表，每个<strong>hlist_head</strong>包含一个<strong>hlist_node</strong>。</p>
+<p>除此之外，还定义了另一种<strong>hlist_head</strong>数据结构，主要用于散列表，每个<strong>hlist_head</strong>包含一个<strong>hlist_node</strong>。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">hlist_head</span>&#123;</span></span><br><span class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">hlist_node</span> *<span class="title">first</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">hlist_node</span>&#123;</span></span><br><span class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">hlist_node</span> *<span class="title">next</span>, **<span class="title">pprev</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <center><img src="/images/list_1.png" alt="list_1"></center>
