@@ -111,14 +111,14 @@
   <meta name="description" content="简介Linux下c语言进程相关的函数。">
 <meta name="keywords" content="linux,c,进程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux进程相关函数">
+<meta property="og:title" content="Linux进程相关函数">
 <meta property="og:url" content="http://yoursite.com/2018/11/05/linux-c-process/index.html">
 <meta property="og:site_name" content="我的博客">
 <meta property="og:description" content="简介Linux下c语言进程相关的函数。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-22T11:55:44.810Z">
+<meta property="og:updated_time" content="2020-11-21T01:55:20.531Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux进程相关函数">
+<meta name="twitter:title" content="Linux进程相关函数">
 <meta name="twitter:description" content="简介Linux下c语言进程相关的函数。">
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>linux进程相关函数 | 我的博客</title>
+  <title>Linux进程相关函数 | 我的博客</title>
   
 
 
@@ -318,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">linux进程相关函数
+          <h1 class="post-title" itemprop="name headline">Linux进程相关函数
               
             
           </h1>
@@ -360,7 +360,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-22 19:55:44" itemprop="dateModified" datetime="2019-03-22T19:55:44+08:00">2019-03-22</time>
+                <time title="修改时间：2020-11-21 09:55:20" itemprop="dateModified" datetime="2020-11-21T09:55:20+08:00">2020-11-21</time>
               
             
           </span>
@@ -440,7 +440,7 @@
 <h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><p>信号是在软件层次上对中断机制的一种模拟，是一种异步通信方式。信号可以直接进行用户空间进程和内核进程之间的交互，内核进程也可以利用它来通知用户空间进程发生了哪些系统事件。<br>一旦有信号产生，用户进程对信号的响应有3种方式:<br>执行默认操作。<br>捕捉信号。定义信号处理函数，当信号发生时，执行相应的处理函数。<br>忽略信号。不希望接收到的信号对进程的执行产生影响，而让进程继续进行时，可以忽略该信号，即不对信号进程任何处理。</p>
 <h4 id="信号发送"><a href="#信号发送" class="headerlink" title="信号发送"></a>信号发送</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">raise</span><span class="params">(<span class="keyword">int</span> sig)</span></span>;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>头文件:<code>#include &lt;signal.h&gt;</code><br>功能:发送sig信号给当前进程<br>返回值:<br>成功:0，其值为子进程进程号<br>失败:-1</p>
+<p>头文件:<code>#include &lt;signal.h&gt;</code><br>功能:发送sig信号给当前进程<br>返回值:<br>成功: 0<br>失败: 非0</p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">kill</span><span class="params">(<span class="keyword">pid_t</span> pid,<span class="keyword">int</span> sig)</span></span>;</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -617,7 +617,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -652,7 +652,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -717,7 +719,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
