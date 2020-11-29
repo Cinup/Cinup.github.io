@@ -15,7 +15,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -207,7 +207,8 @@
   </style>
 </noscript>
 
-</head>
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
@@ -550,9 +551,27 @@
 <p>遍历结果为:1—&gt;2—&gt;3—&gt;4—&gt;5—&gt;6</p>
 <p>从遍历结果可知，除了层序遍历，树的遍历逻辑上就是遍历左右子树，是递归的遍历，因此代码很自然的就可以采用递归的方式遍历。</p>
 <p>伪代码:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//前序</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">traversal</span><span class="params">(Node)</span></span>&#123;</span><br><span class="line">    nodeOperation()</span><br><span class="line">    traversal(Node.left)</span><br><span class="line">    traversal(Node.right)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token comment" spellcheck="true">//前序</span>
+<span class="token keyword">func</span> <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">nodeOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">.</span>left<span class="token punctuation">)</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>nodeOperation代表实际的操作，只要修改它与两个traversal()函数的相对位置，就可以轻松实现中序遍历和后续遍历。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//中序</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">traversal</span><span class="params">(Node)</span></span>&#123;</span><br><span class="line">    traversal(Node.left)</span><br><span class="line">    nodeOperation()</span><br><span class="line">    traversal(Node.right)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//后序</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">traversal</span><span class="params">(Node)</span></span>&#123;</span><br><span class="line">    traversal(Node.left)</span><br><span class="line">    traversal(Node.right)</span><br><span class="line">    nodeOperation()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token comment" spellcheck="true">//中序</span>
+<span class="token keyword">func</span> <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">.</span>left<span class="token punctuation">)</span>
+    <span class="token function">nodeOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//后序</span>
+<span class="token keyword">func</span> <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">.</span>left<span class="token punctuation">)</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>Node<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
+    <span class="token function">nodeOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>而层序遍历就不能使用递归的方法实现，需要使用其他方法。</p>
 <h3 id="满二叉树"><a href="#满二叉树" class="headerlink" title="满二叉树"></a>满二叉树</h3><p>除了最后一层是叶子结点外，每一层上的所有结点都有两个子结点。</p>
 <center><img src="/images/full2tree.png" alt="full2tree"></center>
@@ -685,7 +704,13 @@
 <li>y=rightof(parent(p))=R</li>
 </ul>
 <p><img src="/images/lprr.png" alt="lprr"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (colorOf(y) == RED) &#123;</span><br><span class="line">    setColor(parentOf(x), BLACK);        <span class="comment">//将p结点变成黑色</span></span><br><span class="line">    setColor(y, BLACK);	                 <span class="comment">//将p的兄弟结点变成黑色</span></span><br><span class="line">    setColor(parentOf(parentOf(x)), RED);<span class="comment">//将p的父结点变成红色</span></span><br><span class="line">    x = parentOf(parentOf(x));           <span class="comment">//以p的父结点作为x结点，继续向上调整</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">colorOf</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> <span class="token operator">==</span> RED<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//将p结点变成黑色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>                     <span class="token comment" spellcheck="true">//将p的兄弟结点变成黑色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> RED<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//将p的父结点变成红色</span>
+    x <span class="token operator">=</span> <span class="token function">parentOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment" spellcheck="true">//以p的父结点作为x结点，继续向上调整</span>
+<span class="token punctuation">}</span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li><p>y=rightof(parent(p))=B</p>
 <ul>
@@ -698,12 +723,29 @@
 <p><img src="/images/lprbl.png" alt="lprbl"></p>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">//情况1</span></span><br><span class="line">    <span class="keyword">if</span> (x == rightOf(parentOf(x))) &#123;</span><br><span class="line">        x = parentOf(x);         <span class="comment">//以p结点作为x结点</span></span><br><span class="line">        rotateLeft(x);           <span class="comment">//x结点左旋转</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//情况2</span></span><br><span class="line">    setColor(parentOf(x), BLACK);        <span class="comment">//将p结点变成黑色</span></span><br><span class="line">    setColor(parentOf(parentOf(x)), RED);<span class="comment">//将p结点的父结点变成红色</span></span><br><span class="line">    rotateRight(parentOf(parentOf(x)));  <span class="comment">//x结点的父结点的父结点右旋转</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//情况1</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token function">rightOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        x <span class="token operator">=</span> <span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//以p结点作为x结点</span>
+        <span class="token function">rotateLeft</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment" spellcheck="true">//x结点左旋转</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//情况2</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//将p结点变成黑色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> RED<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//将p结点的父结点变成红色</span>
+    <span class="token function">rotateRight</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//x结点的父结点的父结点右旋转</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>p=rightof(parent(p))</strong>(和上面的情况是镜像)</p>
 <ul>
 <li>y=leftof(parent(p))=R</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (colorOf(y) == RED) &#123;</span><br><span class="line">    setColor(parentOf(x), BLACK);</span><br><span class="line">    setColor(y, BLACK);</span><br><span class="line">    setColor(parentOf(parentOf(x)), RED);</span><br><span class="line">    x = parentOf(parentOf(x));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">colorOf</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> <span class="token operator">==</span> RED<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> RED<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    x <span class="token operator">=</span> <span class="token function">parentOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>y=leftof(parent(p))=B<ul>
 <li>x=leftof(p)</li>
@@ -711,11 +753,19 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x == leftOf(parentOf(x))) &#123;</span><br><span class="line">    x = parentOf(x);</span><br><span class="line">    rotateRight(x);         <span class="comment">//x结点右旋转</span></span><br><span class="line">&#125;</span><br><span class="line">setColor(parentOf(x), BLACK);</span><br><span class="line">setColor(parentOf(parentOf(x)), RED);</span><br><span class="line">rotateLeft(parentOf(parentOf(x)));  <span class="comment">//x结点的父结点的父结点右旋转</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token function">leftOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    x <span class="token operator">=</span> <span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">rotateRight</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//x结点右旋转</span>
+<span class="token punctuation">}</span>
+<span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> RED<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">rotateLeft</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//x结点的父结点的父结点右旋转</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>y在左或是在右是镜像的，不会影响平衡操作，仅仅是旋转方向不同而已。</p>
 <p>根据这6种情况的平衡方式，会自底向上不断进行调整。</p>
 <p>最后为了防止根结点被修改成红色，需要强制修改成黑色。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root.color = BLACK;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java">root<span class="token punctuation">.</span>color <span class="token operator">=</span> BLACK<span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>下图是一个红黑树的调整过程，涉及全部可能的调整过程(两种镜像是对称的，算作一种)。</p>
 <center><img src="/images/rbtree.png" alt="rbtree"></center>
 
@@ -759,7 +809,13 @@
 <li>sib=R</li>
 </ul>
 <p><img src="/images/br.png" alt="br"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (colorOf(sib) == RED) &#123;</span><br><span class="line">    setColor(sib, BLACK);      <span class="comment">//兄弟结点变成黑色</span></span><br><span class="line">    setColor(parentOf(x), RED);<span class="comment">//父结点变成红色</span></span><br><span class="line">    rotateLeft(parentOf(x));   <span class="comment">//左旋父结点(右则为右旋，是镜像的)</span></span><br><span class="line">    sib = rightOf(parentOf(x));<span class="comment">//重新修正兄弟结点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">colorOf</span><span class="token punctuation">(</span>sib<span class="token punctuation">)</span> <span class="token operator">==</span> RED<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span>sib<span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//兄弟结点变成黑色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> RED<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//父结点变成红色</span>
+    <span class="token function">rotateLeft</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//左旋父结点(右则为右旋，是镜像的)</span>
+    sib <span class="token operator">=</span> <span class="token function">rightOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//重新修正兄弟结点</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这时修正的sib=B，需要继续调整，用图片展示调整过程 <a href="https://www.cnblogs.com/qingergege/p/7351659.html" target="_blank" rel="noopener">系列图片来源</a></p>
 <p><img src="/images/dlrr-1.png" alt="dlrr-1"></p>
 <p><img src="/images/dlrr-2.png" alt="dlrr-2"></p>
@@ -772,7 +828,27 @@
 </li>
 </ul>
 <p><img src="/images/bb.png" alt="bb"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//兄弟结点也是叶子结点</span></span><br><span class="line"><span class="keyword">if</span> (colorOf(leftOf(sib))  == BLACK &amp;&amp;</span><br><span class="line">    colorOf(rightOf(sib)) == BLACK) &#123;</span><br><span class="line">    setColor(sib, RED);  <span class="comment">//兄弟结点变成红色</span></span><br><span class="line">    x = parentOf(x);     <span class="comment">//以x的父结点作为x继续调整</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">//兄弟结点的右孩子是黑色，说明左孩子是红色</span></span><br><span class="line">    <span class="keyword">if</span> (colorOf(rightOf(sib)) == BLACK) &#123;</span><br><span class="line">        setColor(leftOf(sib), BLACK);  <span class="comment">//兄弟结点的左孩子变成黑色</span></span><br><span class="line">        setColor(sib, RED);            <span class="comment">//兄弟结点变成红色</span></span><br><span class="line">        rotateRight(sib);              <span class="comment">//右旋兄弟结点</span></span><br><span class="line">        sib = rightOf(parentOf(x));    <span class="comment">//重新修正兄弟结点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//兄弟结点的右孩子是红色</span></span><br><span class="line">    setColor(sib, colorOf(parentOf(x)));<span class="comment">//兄弟结点变成父结点的颜色</span></span><br><span class="line">    setColor(parentOf(x), BLACK);       <span class="comment">//父结点变成黑色</span></span><br><span class="line">    setColor(rightOf(sib), BLACK);      <span class="comment">//兄弟结点的右孩子变成黑色</span></span><br><span class="line">    rotateLeft(parentOf(x));            <span class="comment">//左旋父结点，相当于左边增加了一个黑色结点x</span></span><br><span class="line">    x = root;                           <span class="comment">//调整完毕</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//兄弟结点也是叶子结点</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">colorOf</span><span class="token punctuation">(</span><span class="token function">leftOf</span><span class="token punctuation">(</span>sib<span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token operator">==</span> BLACK <span class="token operator">&amp;&amp;</span>
+    <span class="token function">colorOf</span><span class="token punctuation">(</span><span class="token function">rightOf</span><span class="token punctuation">(</span>sib<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> BLACK<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span>sib<span class="token punctuation">,</span> RED<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//兄弟结点变成红色</span>
+    x <span class="token operator">=</span> <span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//以x的父结点作为x继续调整</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//兄弟结点的右孩子是黑色，说明左孩子是红色</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">colorOf</span><span class="token punctuation">(</span><span class="token function">rightOf</span><span class="token punctuation">(</span>sib<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> BLACK<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">leftOf</span><span class="token punctuation">(</span>sib<span class="token punctuation">)</span><span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//兄弟结点的左孩子变成黑色</span>
+        <span class="token function">setColor</span><span class="token punctuation">(</span>sib<span class="token punctuation">,</span> RED<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//兄弟结点变成红色</span>
+        <span class="token function">rotateRight</span><span class="token punctuation">(</span>sib<span class="token punctuation">)</span><span class="token punctuation">;</span>              <span class="token comment" spellcheck="true">//右旋兄弟结点</span>
+        sib <span class="token operator">=</span> <span class="token function">rightOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//重新修正兄弟结点</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//兄弟结点的右孩子是红色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span>sib<span class="token punctuation">,</span> <span class="token function">colorOf</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//兄弟结点变成父结点的颜色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//父结点变成黑色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token function">rightOf</span><span class="token punctuation">(</span>sib<span class="token punctuation">)</span><span class="token punctuation">,</span> BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//兄弟结点的右孩子变成黑色</span>
+    <span class="token function">rotateLeft</span><span class="token punctuation">(</span><span class="token function">parentOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//左旋父结点，相当于左边增加了一个黑色结点x</span>
+    x <span class="token operator">=</span> root<span class="token punctuation">;</span>                           <span class="token comment" spellcheck="true">//调整完毕</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>下面用图片展示三种情况的调整过程 <a href="https://www.cnblogs.com/qingergege/p/7351659.html" target="_blank" rel="noopener">系列图片来源</a></p>
 <p>leftof(sib)=B&amp;&amp;rightof(sib)=B</p>
 <p><img src="/images/dlrb-1.png" alt="dlrb-1"></p>
@@ -904,7 +980,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -941,7 +1017,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1008,7 +1084,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1078,7 +1156,7 @@
 
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
 
 
 

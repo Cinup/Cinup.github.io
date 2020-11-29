@@ -15,7 +15,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -182,7 +182,8 @@
   </style>
 </noscript>
 
-</head>
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
@@ -425,7 +426,19 @@
 <p>然后继续下一轮的比较</p>
 <p>其中(…)表示待排序元素，需要下一轮进行冒泡排序的的元素，[…]表示已排序元素，已经确定位置，不用再参与排序。</p>
 <p>在时间复杂度上，冒泡排序需要两层循环，外层循环表示已排序的元素，内层循环选择最值。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; length<span class="number">-1</span>; i++ &#123;</span><br><span class="line">   flag := <span class="literal">true</span></span><br><span class="line">   <span class="keyword">for</span> j := <span class="number">0</span>; j &lt; length-i<span class="number">-1</span>; j++ &#123;</span><br><span class="line">      <span class="keyword">if</span> data[j] &gt; data[j+<span class="number">1</span>] &#123;</span><br><span class="line">         flag = <span class="literal">false</span></span><br><span class="line">         data[j], data[j+<span class="number">1</span>] = data[j+<span class="number">1</span>], data[j]</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> flag &#123;</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token number">-1</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+   flag <span class="token operator">:=</span> <span class="token boolean">true</span>
+   <span class="token keyword">for</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> length<span class="token operator">-</span>i<span class="token number">-1</span><span class="token punctuation">;</span> j<span class="token operator">++</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> data<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">{</span>
+         flag <span class="token operator">=</span> <span class="token boolean">false</span>
+         data<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> data<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">if</span> flag <span class="token punctuation">{</span>
+      <span class="token keyword">break</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因此n个元素冒泡排序的循环次数为(n-1)+(n-2)+…+1，最坏的时间复杂度为O(n²)，由于冒泡排序一轮排序是相邻元素依次比较，所以当没有发生元素交换时，说明元素已有序，只需要n-1次比较,最好的时间复杂度为O(n)。</p>
 <p><img src="/images/bubblesort.gif" alt="bubblesort"></p>
 <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>选择排序也是一种比较排序，它的思想是一轮比较找出最值，并把最值放到指定位置。它与冒泡排序不同的是，冒泡排序交换的很频繁，而选择排序一轮比较也只交换一次，就是将最值和指定位置上的元素交换。</p>
@@ -441,7 +454,17 @@
 <p>[1] (4，2，8，5，7，3)</p>
 <p>然后继续下一轮的比较</p>
 <p>在时间复杂度上，选择排序也需要两层循环，外层寻遍表示最值放置的位置，内存循环表示待排序的个数。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; length<span class="number">-1</span>; i++ &#123;</span><br><span class="line">   min := i</span><br><span class="line">   <span class="comment">//内层遍历待排序一次选出最值</span></span><br><span class="line">   <span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; length; j++ &#123;</span><br><span class="line">      <span class="keyword">if</span> data[j] &lt; data[min] &#123;</span><br><span class="line">         min = j</span><br><span class="line">      &#125;</span><br><span class="line">   data[i], data[min] = data[min], data[i]</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token number">-1</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+   min <span class="token operator">:=</span> i
+   <span class="token comment" spellcheck="true">//内层遍历待排序一次选出最值</span>
+   <span class="token keyword">for</span> j <span class="token operator">:=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> j<span class="token operator">++</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> data<span class="token punctuation">[</span>min<span class="token punctuation">]</span> <span class="token punctuation">{</span>
+         min <span class="token operator">=</span> j
+      <span class="token punctuation">}</span>
+   data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span>min<span class="token punctuation">]</span> <span class="token operator">=</span> data<span class="token punctuation">[</span>min<span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因此n个元素选择排序的循环次数为(n-1)+(n-2)+…+1，最坏的时间复杂度为O(n²)，由于选择排序一轮排序都是和当前已知的最值比较，因此元素即使有序排序算法也不能感知到，最好的时间复杂度也是O(n²)。</p>
 <p><img src="/images/selectionsort.gif" alt="selectsort"></p>
 <h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>插入排序也是比较排序，插入排序的思想类似于整理扑克牌，抓一张牌，然后把牌放入合适的位置。冒泡排序和选择排序每轮排序都能确定一个元素的最终位置，但是插入排序是做不到的，因为它的新元素只和已知有序的序列比较。</p>
@@ -461,7 +484,21 @@
 <p>[2，3，4] (8，5，7，1)</p>
 <p>然后继续下一轮的比较</p>
 <p>在时间复杂度上，插入排序也是两层循环，外层表示待排序的元素，内层选择插入的位置。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">1</span>; i &lt; length; i++ &#123;</span><br><span class="line">   t := data[i]</span><br><span class="line">   j := i - <span class="number">1</span></span><br><span class="line">   <span class="keyword">for</span> ; j &gt;= <span class="number">0</span>; j-- &#123;</span><br><span class="line">      <span class="keyword">if</span> data[j] &gt; t &#123;</span><br><span class="line">         <span class="comment">//向后移动</span></span><br><span class="line">         data[j+<span class="number">1</span>] = data[j]</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//插入到位置</span></span><br><span class="line">   data[j+<span class="number">1</span>] = t</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+   t <span class="token operator">:=</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+   j <span class="token operator">:=</span> i <span class="token operator">-</span> <span class="token number">1</span>
+   <span class="token keyword">for</span> <span class="token punctuation">;</span> j <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> j<span class="token operator">--</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> t <span class="token punctuation">{</span>
+         <span class="token comment" spellcheck="true">//向后移动</span>
+         data<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+         <span class="token keyword">break</span>
+      <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+   <span class="token comment" spellcheck="true">//插入到位置</span>
+   data<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> t
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因此n个元素插入排序的循环次数为1+2+…+(n-1)，最坏的时间复杂度也是O(n²)，由于插入排序之前的结果是有序的，因此对于插入值，首先和最值比较，最好的情况是第一次就确定了插入的位置，无需再进行后续的比较，最好的时间复杂度为O(n)。</p>
 <p><img src="/images/insertionsort.gif" alt="insertionsort"></p>
 <h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>堆排序的关键是构建堆，堆的定义类似完全二叉树。</p>
@@ -471,10 +508,25 @@
 <p>堆分为大根堆和小根堆，大根堆要求父结点的值不小于孩子结点的值，所以大根堆中根结点的值就是最大值，小根堆则相反，父结点的值不大于孩子结点的值。</p>
 <p>堆排序的第一步需要构建出堆，以大根堆为例，首先从最后一个非叶子结点到循环根结点，如果孩子结点中的较大值大于父结点的值，就交换它们的值，循环完成后，根结点的值就会是最大值。</p>
 <p>然后再次从第二个结点(第一个结点为根结点，根结点已经是最大值)循环到最后一个非叶结点，确保父结点的值不小于孩子结点。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">time := <span class="built_in">len</span>(data)/<span class="number">2</span> - <span class="number">1</span></span><br><span class="line"><span class="comment">//首次建堆</span></span><br><span class="line"><span class="keyword">for</span> i := time; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">   check(data, i)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//二次建堆</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= time; i++ &#123;</span><br><span class="line">   check(data, i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go">time <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">-</span> <span class="token number">1</span>
+<span class="token comment" spellcheck="true">//首次建堆</span>
+<span class="token keyword">for</span> i <span class="token operator">:=</span> time<span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span> <span class="token punctuation">{</span>
+   <span class="token function">check</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//二次建堆</span>
+<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> time<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+   <span class="token function">check</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>n个元素构建堆的时间复杂度为O(n)</p>
 <p>堆建好后就可以进行排序了，堆排序的规则是，由于根结点是最大值，因此将根结点和最后一个结点交换位置，堆长度减一，表示确定了一个元素的位置，然后调整堆，使得根结点仍然是最大值。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="built_in">len</span>(data) - <span class="number">1</span>; i &gt; <span class="number">0</span>; i-- &#123;</span><br><span class="line">   <span class="comment">//根结点和最后一个结点交换位置</span></span><br><span class="line">   data[<span class="number">0</span>], data[i] = data[i], data[<span class="number">0</span>]</span><br><span class="line">   <span class="comment">//调整堆</span></span><br><span class="line">   adjust(data, <span class="number">0</span>, i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span> <span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">//根结点和最后一个结点交换位置</span>
+   data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+   <span class="token comment" spellcheck="true">//调整堆</span>
+   <span class="token function">adjust</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在时间复杂度上，因为n个元素堆排序的循环次数为n-1次，调整次数为堆的高度，调整次数和为log(n-1)+log(n-2)+…+log2=log(n-1)!，所以时间复杂度近似为O(nlogn)。</p>
 <p><img src="/images/heapsort.gif" alt="heapsort"></p>
 <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>快速排序使用二分法的方式来进行排序，首先选择一个中间值，以这个中间值划分出左右两个区间，再对这两个区间再次进行划分。</p>
@@ -491,7 +543,24 @@
 <p>(1，2) [3] (4，8，5，7)</p>
 <p>对左边和右边两个区间继续排序</p>
 <p>在时间复杂度上，快速排序近似于二分法。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> right-left &lt; <span class="number">1</span> &#123;</span><br><span class="line">   <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line">mid := data[left]</span><br><span class="line">i := left + <span class="number">1</span></span><br><span class="line">j := i</span><br><span class="line"><span class="comment">//n-1次比较</span></span><br><span class="line"><span class="keyword">for</span> j &lt;= right &#123;</span><br><span class="line">   <span class="keyword">if</span> data[j] &lt; mid &#123;</span><br><span class="line">      data[i],data[j] = data[j],data[i]</span><br><span class="line">      i++</span><br><span class="line">   &#125;</span><br><span class="line">   j++</span><br><span class="line">&#125;</span><br><span class="line">data[left],data[i<span class="number">-1</span>] = data[i<span class="number">-1</span>],data[left]</span><br><span class="line">quickSort(data,left,i<span class="number">-1</span>)</span><br><span class="line">quickSort(data,i,right)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">if</span> right<span class="token operator">-</span>left <span class="token operator">&lt;</span> <span class="token number">1</span> <span class="token punctuation">{</span>
+   <span class="token keyword">return</span>
+<span class="token punctuation">}</span>
+mid <span class="token operator">:=</span> data<span class="token punctuation">[</span>left<span class="token punctuation">]</span>
+i <span class="token operator">:=</span> left <span class="token operator">+</span> <span class="token number">1</span>
+j <span class="token operator">:=</span> i
+<span class="token comment" spellcheck="true">//n-1次比较</span>
+<span class="token keyword">for</span> j <span class="token operator">&lt;=</span> right <span class="token punctuation">{</span>
+   <span class="token keyword">if</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> mid <span class="token punctuation">{</span>
+      data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+      i<span class="token operator">++</span>
+   <span class="token punctuation">}</span>
+   j<span class="token operator">++</span>
+<span class="token punctuation">}</span>
+data<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">,</span>data<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span> <span class="token operator">=</span> data<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>data<span class="token punctuation">[</span>left<span class="token punctuation">]</span>
+<span class="token function">quickSort</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span>left<span class="token punctuation">,</span>i<span class="token number">-1</span><span class="token punctuation">)</span>
+<span class="token function">quickSort</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span>i<span class="token punctuation">,</span>right<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因此n个元素快速排序循环次数最好情况为</p>
 <p>T(n)=2T(n/2)+n-1=2(2T(n/4)+(n-1)/2+n-1=4T(n/4)+2(n-1)=…=2^kT(n/2^k)+k(n-1)</p>
 <p>令n/2^k等于1，k=logn</p>
@@ -512,7 +581,15 @@
 <p>[1，2，3，4，5，7，8]</p>
 <p>{…}表示进行需要排序的分组</p>
 <p>在时间复杂度上，二路归并是二分法。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> right-left &lt; <span class="number">1</span> &#123;</span><br><span class="line">   <span class="keyword">return</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">   mid := (right + left ) &gt;&gt; <span class="number">1</span></span><br><span class="line">   mergeSort(data, left, mid)</span><br><span class="line">   mergeSort(data, mid+<span class="number">1</span>, right)</span><br><span class="line">   merge(data, left, mid, right)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">if</span> right<span class="token operator">-</span>left <span class="token operator">&lt;</span> <span class="token number">1</span> <span class="token punctuation">{</span>
+   <span class="token keyword">return</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+   mid <span class="token operator">:=</span> <span class="token punctuation">(</span>right <span class="token operator">+</span> left <span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">1</span>
+   <span class="token function">mergeSort</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> left<span class="token punctuation">,</span> mid<span class="token punctuation">)</span>
+   <span class="token function">mergeSort</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+   <span class="token function">merge</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> left<span class="token punctuation">,</span> mid<span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>T(n)=2T(n/2)+n</p>
 <p>所以归并排序的时间复杂度无论好坏一律为O(nlogn)。</p>
 <p><img src="/images/mergesort.gif" alt="mergesort"></p>
@@ -619,7 +696,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/28/new-esper/" rel="prev" title="Esper">
+              <a href="/2019/06/28/esper-doc/" rel="prev" title="Esper">
                 Esper <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -693,7 +770,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -730,7 +807,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -797,7 +874,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -867,7 +946,7 @@
 
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
 
 
 

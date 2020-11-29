@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.1',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="简介操作系统原理与实践课程实验报告。课程地址-网易云课堂，实验环境地址-实验楼。">
+<meta name="keywords" content="linux,操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统原理与实践">
+<meta property="og:url" content="http://yoursite.com/2020/11/27/linux-practice/index.html">
+<meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="简介操作系统原理与实践课程实验报告。课程地址-网易云课堂，实验环境地址-实验楼。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/systemboot.png">
+<meta property="og:updated_time" content="2020-11-28T13:57:16.177Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作系统原理与实践">
+<meta name="twitter:description" content="简介操作系统原理与实践课程实验报告。课程地址-网易云课堂，实验环境地址-实验楼。">
+<meta name="twitter:image" content="http://yoursite.com/images/systemboot.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/27/linux-practice/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>操作系统原理与实践 | 我的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">记录时光，记录生活。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/27/linux-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cp">
+      <meta itemprop="description" content="一个不知名的博客。">
+      <meta itemprop="image" content="/images/image.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">操作系统原理与实践
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-27 13:01:03" itemprop="dateCreated datePublished" datetime="2020-11-27T13:01:03+08:00">2020-11-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-28 21:57:16" itemprop="dateModified" datetime="2020-11-28T21:57:16+08:00">2020-11-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>操作系统原理与实践课程实验报告。<a href="https://mooc.study.163.com/course/1000002004#/info" target="_blank" rel="noopener">课程地址-网易云课堂</a>，<a href="https://www.lanqiao.cn/courses/115" target="_blank" rel="noopener">实验环境地址-实验楼</a>。</p>
+<a id="more"></a>
+<h2 id="0x00-熟悉实验环境"><a href="#0x00-熟悉实验环境" class="headerlink" title="0x00 熟悉实验环境"></a>0x00 熟悉实验环境</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>硬件环境：IA-32(x86)架构</p>
+<p>软件环境：Bochs、gcc、gdb</p>
+<p>Linux版本：0.11</p>
+<h3 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h3><p>解压实验文件</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># 1进入到 oslab 所在的文件夹
+$ cd /home/shiyanlou/oslab/
+# 2解压，并指定解压到 /home/shiyanlou/
+$ tar -zxvf hit-oslab-linux-20110823.tar.gz -C /home/shiyanlou/
+# 3查看是否解压成功
+$ ls -al
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p> 除了压缩包 hit-oslab-linux-20110823.tar.gz 之外，其他的就是压缩包中的内容：</p>
+<ol>
+<li>linux-0.11</li>
+</ol>
+<p>linux-0.11内核源代码以及Makefile。</p>
+<ol start="2">
+<li>Image 文件</li>
+</ol>
+<p>内核编译之后的目标文件，编译后生成在linux-0.11目录中。</p>
+<ol start="3">
+<li>hdc-0.11.img 文件</li>
+</ol>
+<p>hdc-0.11.img 文件的格式是 Minix 文件系统的镜像。</p>
+<p>Linux 所有版本都支持这种格式的文件系统，所以可以直接在宿主 Linux 上通过 mount 命令访问此文件内的文件，达到宿主系统和 bochs 内运行的 Linux 0.11 之间交换文件的效果。</p>
+<ol start="4">
+<li>bochs 目录</li>
+</ol>
+<p>bochs 目录下是与 bochs 相关的执行文件、数据文件和配置文件。</p>
+<ol start="5">
+<li>run脚本</li>
+</ol>
+<p>run 是运行 bochs 的脚本命令。</p>
+<p>运行后 bochs 会自动在它的虚拟软驱 A 和虚拟硬盘上各挂载一个镜像文件，软驱上挂载是 linux-0.11/Image，硬盘上挂载的是 hdc-0.11.img。</p>
+<p>因为 bochs 配置文件中的设置是从软驱 A 启动，所以 Linux 0.11 会被自动加载。</p>
+<p>而 Linux 0.11 会驱动硬盘，并 mount 硬盘上的文件系统，也就是将 hdc-0.11.img 内镜像的文件系统挂载到 0.11 系统内的根目录 —— <code>/</code>。在 0.11 下访问文件系统，访问的就是 hdc-0.11.img 文件内虚拟的文件系统。</p>
+<h3 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h3><pre class="line-numbers language-shell"><code class="language-shell">$ cd ./linux-0.11/
+$ make all
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="运行和调试"><a href="#运行和调试" class="headerlink" title="运行和调试"></a>运行和调试</h3><p>运行</p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ cd ~/oslab/
+$ ./run
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>汇编级调试</p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ cd ~/oslab/
+# 运行脚本前确定已经关闭运行的 Bochs
+$ ./dbg-asm
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>C语言级调试</p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ cd ~/oslab
+# 1
+$ ./dbg-c
+# 2
+$ ./rungdb
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="交换文件"><a href="#交换文件" class="headerlink" title="交换文件"></a>交换文件</h3><pre class="line-numbers language-shell"><code class="language-shell">$ cd ~/oslab/
+# 启动挂载脚本
+$ sudo ./mount-hdc
+# 卸载
+$ sudo umount hdc
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="0x01-操作系统的引导"><a href="#0x01-操作系统的引导" class="headerlink" title="0x01 操作系统的引导"></a>0x01 操作系统的引导</h2><h3 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h3><p>改写 bootsect.s，主要完成功能：</p>
+<ol>
+<li>bootsect.s能在屏幕上打印一段提示信息“XXX is Loading…”。</li>
+<li>bootsect.s能完成 setup.s 的载入，并跳转到 setup.s 开始地址执行。</li>
+</ol>
+<p>改写 setup.s，主要完成功能：</p>
+<ol>
+<li>setup.s 向屏幕输出一行”Now we are in SETUP”</li>
+<li>setup.s 能获取基本的硬件参数，将其存放在内存的特定地址，并输出到屏幕上。</li>
+<li>setup.s 不再加载 Linux 内核，保持上述信息显示在屏幕上即可。</li>
+</ol>
+<h3 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理"></a>实验原理</h3><p>计算机启动时，由于操作系统程序还在磁盘上，需要加载操作系统到内存中，这个加载过程就由BIOS(Basic Input Output System)来完成。</p>
+<p>BIOS是固化在计算机主板上一个ROM芯片上的程序，当计算器启动时，会将CS寄存器置为0xFFFF，IP寄存器置为0x0000，通过CS:IP寻址到0xFFFF0，0xFFFF0～0xFFFFF内存中仅包含一条跳转指令，跳转指令中包含BIOS程序真正的入口。</p>
+<p><em>注</em>：存在其他情况，CS寄存器的值为0xF000，IP寄存器的值为0xFFF0，但是CS:IP仍然寻址到0xFFFF0地址。</p>
+<p>BIOS程序会对计算机做基本的检查，建立中断向量表和中断服务程序，然后将磁盘第一个扇区中512字节的MBR读取到0x07C00～0x07DFF处。</p>
+<p>读取完毕后，BIOS的工作到此结束，接下来的任务就是MBR的工作。</p>
+<h4 id="bootsect"><a href="#bootsect" class="headerlink" title="bootsect"></a>bootsect</h4><p>Linux中MBR对应的就是bootsect程序。</p>
+<blockquote>
+<p>bootsect.s</p>
+</blockquote>
+<pre class="line-numbers language-assembly"><code class="language-assembly">SYSSIZE = 0x3000
+.globl begtext, begdata, begbss, endtext, enddata, endbss
+.text
+begtext:
+.data
+begdata:
+.bss
+begbss:
+.text
+SETUPLEN = 4                
+BOOTSEG  = 0x07c0            
+INITSEG  = 0x9000            
+SETUPSEG = 0x9020            
+SYSSEG   = 0x1000            
+ENDSEG   = SYSSEG + SYSSIZE ;ENDSEG=0x4000
+ROOT_DEV = 0x306
+;程序入口
+entry _start
+;将0x07c00-0x07dff的512字节复制到0x90000-0x901ff
+_start:
+    mov    ax,#BOOTSEG  ;ax=0x07c0    
+    mov    ds,ax        ;ds=0x07c0    
+    mov    ax,#INITSEG  ;ax=0x9000
+    mov    es,ax        ;es=0x9000
+    mov    cx,#256      ;cx=256
+    sub    si,si        ;si=0 ds:si=0x07c00
+    sub    di,di        ;di=0 es:di=0x90000
+    rep              ;重复直到cx=0
+    movw             ;将ds:si的内容复制到至es:di,movw一次复制2个字节,256次就是512个字节
+    jmpi  go,INITSEG ;间接跳转,赋值cs:0x9000,ip:go
+;设置寄存器的值
+go:    
+    mov    ax,cs        ;ax=0x9000
+    mov    ds,ax        ;ds=0x9000
+    mov    es,ax        ;es=0x9000
+    mov    ss,ax        ;ss=0x9000
+    mov    sp,#0xFF00   ;sp=0xFF00
+;读取setup.s,从第2个扇区开始,读取4个扇区的数据到内存0x90200开始处
+load_setup:
+    mov    dx,#0x0000     ;dx=0x0000 
+    mov    cx,#0x0002     ;cx=0x0002
+    mov    bx,#0x0200     ;bx=0x0200
+    mov    ax,#0x0200+SETUPLEN    
+                     ;ax=0x0204
+    int    0x13         ;读取磁盘中断,ah=0x02,al扇区数量,
+                     ;ch柱面号,cl开始扇区,dh磁头号,dl驱动器号,es:bx内存地址
+    jnc    ok_load_setup;读取成功,跳转到ok_load_setup
+    mov    dx,#0x0000
+    mov    ax,#0x0000
+    int    0x13
+    j    load_setup
+;获取驱动器参数,在屏幕打印字符,加载内核代码
+ok_load_setup:
+    mov    dl,#0x00     ;dl=0x00
+    mov    ax,#0x0800   ;ax=0x0800
+    int    0x13         ;ah=0x08,读取驱动器参数
+    mov    ch,#0x00
+    seg cs
+    mov    sectors,cx   ;mov cs:[sectors],cx
+    mov    ax,#INITSEG  ;ax=0x9000
+    mov    es,ax        ;ex=0x9000
+    mov    ah,#0x03     ;ah=0x03
+    xor    bh,bh        ;bh=0
+    int    0x10         ;ah=0x03,获取光标的位置和形状
+    mov    cx,#24
+    mov    bx,#0x0007        
+    mov    bp,#msg1     ;es:bp指向输出字符串地址
+    mov    ax,#0x1301   
+    int    0x10         ;ah=0x13,在显示器上显示字符
+;后续代码均为加载内核代码
+;....省略代码
+root_defined:
+    seg cs
+    mov    root_dev,ax
+    jmpi    0,SETUPSEG ;跳转到0x90200处,执行setup.s
+msg1:
+    .byte 13,10
+    .ascii "Cinux is Loading"
+    .byte 13,10,13,10
+.org 508
+root_dev:
+    .word ROOT_DEV
+boot_flag:
+    .word 0xAA55
+.text
+endtext:
+.data
+enddata:
+.bss
+endbss:
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>bootsect程序所做的工作是读取磁盘中的setup程序和内核，之后就将控制权利交给setup程序。</p>
+<h4 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h4><p>setup程序主要完成系统启动前的设置。</p>
+<blockquote>
+<p>setup.s</p>
+</blockquote>
+<pre class="line-numbers language-assembly"><code class="language-assembly">INITSEG  = 0x9000    ! we move boot here - out of the way
+SYSSEG   = 0x1000    ! system loaded at 0x10000 (65536).
+SETUPSEG = 0x9020    ! this is the current segment
+
+.globl begtext, begdata, begbss, endtext, enddata, endbss
+.text
+begtext:
+.data
+begdata:
+.bss
+begbss:
+.text
+entry start
+start:
+;省略一些获取机器系统数据的代码
+;移动0x内核代码到0x00000处
+do_move:
+    mov    es,ax        
+    add    ax,#0x1000
+    cmp    ax,#0x9000
+    jz    end_move
+    mov    ds,ax
+    sub    di,di
+    sub    si,si
+    mov     cx,#0x8000
+    rep
+    movsw
+    jmp    do_move
+;系统设置
+end_move:
+    ;...省略代码,设置中断描述符表和全局描述符表
+    ;打开A20,cpu寻址从16位变成32位
+    mov    al,#0xDF
+    out    #0x60,al
+    call    empty_8042
+    ;cr0寄存器最后一位置1,cpu从实模式进入保护模式
+    mov    ax,#0x0001
+    lmsw    ax
+    ;这时候cpu寻址不再是cs:ip,而是通过cs寻址段描述符
+    ;因此内存地址不是0x0008:0,而是gdt[8]段描述符地址+0,也就是0x00000,即内核程序入口
+    jmpi    0,8
+empty_8042:
+;全局描述符表,每个表项占8个字节
+gdt:
+    .word    0,0,0,0
+    .word    0x07FF   ;gdt[8]
+    .word    0x0000
+    .word    0x9A00
+    .word    0x00C0
+    .word    0x07FF
+    .word    0x0000
+    .word    0x9200    
+    .word    0x00C0        
+idt_48:
+    .word    0
+    .word    0,0    
+gdt_48:
+    .word    0x800
+    .word    512+gdt,0x9
+.text
+endtext:
+.data
+enddata:
+.bss
+endbss:
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>bootsect程序所做的工作是将内核代码移动到内存的0x00000地址处，然后设置中断向量描述符表和全局描述符表，设置cpu开启32位寻址并进入保护模式，之后就将控制权利交给内核程序。</p>
+<h4 id="head"><a href="#head" class="headerlink" title="head"></a>head</h4><p>内核程序中的起始点是head程序，head仍然是用汇编编写的程序，不同的是，head使用的是32位保护模式下汇编，而bootsect和setup使用的是16位实模式下的汇编。head程序会对内核的分页进行设置，并在设置完成后将控制权交给内核的main函数。</p>
+<blockquote>
+<p>head.s</p>
+</blockquote>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><p><a href="https://github.com/Cinup/hit-oslab/tree/master/lab1" target="_blank" rel="noopener">代码</a></p>
+<h3 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h3><p><img src="/images/systemboot.png" alt="systemboot"></p>
+<p>操作系统的引导的主要分为4个部分，BIOS，bootsect，setup和head。</p>
+<p>BIOS的任务是从磁盘读取bootsect到内存，然后执行bootsect程序。</p>
+<p>bootsect程序从磁盘中读取setup和内核，然后执行setup程序。</p>
+<p>setup程序获取系统参数，移动内核到内存起始处，开启cpu32寻址并使cpu进入保护模式，然后执行内核head程序。</p>
+<p>head程序设置系统的页表，系统开始进入分页模式，然后执行内核的main函数。</p>
+<h2 id="0x02-系统调用"><a href="#0x02-系统调用" class="headerlink" title="0x02 系统调用"></a>0x02 系统调用</h2>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/21/linux-system-call/" rel="next" title="Linux系统调用过程">
+                <i class="fa fa-chevron-left"></i> Linux系统调用过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/image.jpeg" alt="cp">
+            
+              <p class="site-author-name" itemprop="name">cp</p>
+              <p class="site-description motion-element" itemprop="description">一个不知名的博客。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-熟悉实验环境"><span class="nav-number">2.</span> <span class="nav-text">0x00 熟悉实验环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实验环境"><span class="nav-number">2.1.</span> <span class="nav-text">实验环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备环境"><span class="nav-number">2.2.</span> <span class="nav-text">准备环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译内核"><span class="nav-number">2.3.</span> <span class="nav-text">编译内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行和调试"><span class="nav-number">2.4.</span> <span class="nav-text">运行和调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换文件"><span class="nav-number">2.5.</span> <span class="nav-text">交换文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-操作系统的引导"><span class="nav-number">3.</span> <span class="nav-text">0x01 操作系统的引导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实验内容"><span class="nav-number">3.1.</span> <span class="nav-text">实验内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验原理"><span class="nav-number">3.2.</span> <span class="nav-text">实验原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bootsect"><span class="nav-number">3.2.1.</span> <span class="nav-text">bootsect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setup"><span class="nav-number">3.2.2.</span> <span class="nav-text">setup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#head"><span class="nav-number">3.2.3.</span> <span class="nav-text">head</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验结果"><span class="nav-number">3.3.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验总结"><span class="nav-number">3.4.</span> <span class="nav-text">实验总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-系统调用"><span class="nav-number">4.</span> <span class="nav-text">0x02 系统调用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cp</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

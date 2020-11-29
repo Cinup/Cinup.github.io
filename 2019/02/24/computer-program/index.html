@@ -15,7 +15,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://yoursite.com/images/hello-1.png">
 <meta property="og:image" content="http://yoursite.com/images/hello-2.png">
 <meta property="og:image" content="http://yoursite.com/images/hello-3.png">
-<meta property="og:updated_time" content="2020-08-23T12:10:00.761Z">
+<meta property="og:updated_time" content="2020-11-27T05:03:31.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序执行过程">
 <meta name="twitter:description" content="简介计算机执行一个程序的全部过程，参考资料&amp;lt;深入理解计算机系统&amp;gt;。">
@@ -181,7 +181,8 @@
   </style>
 </noscript>
 
-</head>
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
@@ -367,7 +368,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-08-23 20:10:00" itemprop="dateModified" datetime="2020-08-23T20:10:00+08:00">2020-08-23</time>
+                <time title="修改时间：2020-11-27 13:03:31" itemprop="dateModified" datetime="2020-11-27T13:03:31+08:00">2020-11-27</time>
               
             
           </span>
@@ -422,7 +423,14 @@
 <a id="more"></a>
 <h2 id="编写源代码"><a href="#编写源代码" class="headerlink" title="编写源代码"></a>编写源代码</h2><p>程序生命周期的第一步是根据期望编写出正确的源代码。</p>
 <p>比如在屏幕上输出hello world，使用c语言的实现的源代码如下:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello world\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>但是源代码仅仅是一个文本文件，还不能真正的运行。就像上面的c语言，它语法和功能上都是正确的，但是这个正确是相对于编写程序的人员而言的，计算机无法阅读出它真正的意图的，计算机阅读到的是文本的<strong>ASCII</strong>码。</p>
 <p>也就是说，源代码是面向开发人员的，一般使用易读的高级语言编写，而计算机是无法直接理解的。因此，为了使计算机能够理解源代码，需要使用一种叫做<strong>编译器</strong>的工具将源代码翻译成计算机能够直接理解的机器语言。</p>
 <center><img src="/images/helloworld.png" alt="helloworld"></center>
@@ -431,20 +439,24 @@
 <h3 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h3><p>gcc是GNU编译器套件(GNU Compiler Collection)包括C、C++、Objective-C、Fortran、Java、Ada和Go语言的前端，也包括了这些语言的库(如libstdc++、libgcj等等)。</p>
 <h3 id="GCC工作过程"><a href="#GCC工作过程" class="headerlink" title="GCC工作过程"></a>GCC工作过程</h3><p><img src="/images/compile.png" alt="编译过程.png"></p>
 <h4 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h4><p>预处理阶段，处理宏定义和include的文件，去除注释，不会对语法进行检查。<br>gcc预处理命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br></pre></td></tr></table></figure>
-<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><p>编译阶段，编译器主要做词法分析、语法分析、语义分析等，在检查无错误后，把代码翻译成汇编语言。<br>gcc编译命令为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -S hello.i -o hello.s</span><br></pre></td></tr></table></figure></p>
-<h4 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h4><p>汇编阶段，生成目标代码(二进制文本形式)。<br>gcc汇编命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -c hello.s -o hello.o</span><br></pre></td></tr></table></figure>
-<h4 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h4><p>链接阶段，生成可执行代码。链接分为两种，一种是静态链接，另外一种是动态链接。使用静态链接的好处是，依赖的动态链接库较少，对动态链接库的版本不会很敏感，具有较好的兼容性；缺点是生成的程序比较大。使用动态链接的好处是，生成的程序比较小，占用较少的主存。</p>
+<pre><code>gcc -E hello.c -o hello.i
+</code></pre><h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><p>编译阶段，编译器主要做词法分析、语法分析、语义分析等，在检查无错误后，把代码翻译成汇编语言。<br>gcc编译命令为：</p>
+<pre><code>gcc -S hello.i -o hello.s
+</code></pre><h4 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h4><p>汇编阶段，生成目标代码(二进制文本形式)。<br>gcc汇编命令为：</p>
+<pre><code>gcc -c hello.s -o hello.o
+</code></pre><h4 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h4><p>链接阶段，生成可执行代码。链接分为两种，一种是静态链接，另外一种是动态链接。使用静态链接的好处是，依赖的动态链接库较少，对动态链接库的版本不会很敏感，具有较好的兼容性；缺点是生成的程序比较大。使用动态链接的好处是，生成的程序比较小，占用较少的主存。</p>
 <ol>
 <li>gcc -I(大写i)  dir 指定头文件路径</li>
 <li>gcc -l library 指定库名</li>
 <li>gcc -L dir 指定库路径</li>
 </ol>
-<p>上述过程也可以一次性完成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc  hello.c -o hello</span><br></pre></td></tr></table></figure></p>
-<h2 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h2><p>经过编译，源代码已经被编译器翻译成计算机可理解的可执行文件，并存放在磁盘中。程序生命周期的最后一步就是运行可执行程序。</p>
+<p>上述过程也可以一次性完成</p>
+<pre><code>gcc  hello.c -o hello
+</code></pre><h2 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h2><p>经过编译，源代码已经被编译器翻译成计算机可理解的可执行文件，并存放在磁盘中。程序生命周期的最后一步就是运行可执行程序。</p>
 <p>在类Unix系统上运行可执行程序，只需要在shell中输入程序的文件名即可。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@Cp:~/test/c $ ./hello </span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell"><code class="language-shell">root@Cp:~/test/c $ ./hello 
+hello world
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>shell是一个命令行解释器，它会等待用户输入命令，然后执行用户的命令。在这个的例子中，shell读取了./hello命令，然后执行了hello\这个可执行文件。很显然，shell屏蔽了大量的细节，以致于我们不明白程序是如何被执行的。</p>
 <h4 id="计算机硬件组成"><a href="#计算机硬件组成" class="headerlink" title="计算机硬件组成"></a>计算机硬件组成</h4><p>要想知道程序执行的步骤，需要先了解计算机的硬件组成部分。以Intel模型为例，一个典型的计算机硬件主要有以下部分组成:</p>
 <center><img src="/images/hardware.png" alt="hardware"></center>
@@ -600,7 +612,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -637,7 +649,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -704,7 +716,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -774,7 +788,7 @@
 
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
 
 
 
